@@ -12,7 +12,6 @@ An app that allows the user to see and update employee and employment data from 
 | JavaScript     | [https://developer.mozilla.org/en-US/docs/Web/JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)      |   
 | Git | [https://git-scm.com/](https://git-scm.com/)     |    
 | Node.js | [https://nodejs.org/](https://nodejs.org/)     |
-| Render Cloud Application | [https://render.com/](https://render.com/)  |
 | NPM | [https://www.npmjs.com](https://www.npmjs.com)   |
 
 ---
@@ -21,10 +20,11 @@ An app that allows the user to see and update employee and employment data from 
 ![Static Badge](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
-![Static Badge](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+<!-- ![Static Badge](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white) -->
 ![Static Badge](https://img.shields.io/badge/License-MIT_License-blue)
-![Static Badge](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
+<!-- ![Static Badge](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge) -->
 
+![Static Badge](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
 ---
 
 ## Description
