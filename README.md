@@ -37,7 +37,7 @@ This application alows a user to interact with the Employee Database which is st
 
 ## Instalation
 
-This application requires the npm modules inquirer and Mysql2. If you do not already have this module installed globally then you will need to type npm install in the command line before running this program. 
+This application requires the npm modules inquirer and mysql2. If you do not already have this module installed globally then you will need to type npm install in the command line before running this program. 
 
 
 ---
