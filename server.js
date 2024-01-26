@@ -60,7 +60,8 @@ inquirer
     }
 ])
 //switch statement to direct next action based on users choice
-.then(handleMainPrompt(response)
+.then((response) => {
+    handleMainPrompt(response)
 //     (response) => {
 //     switch(response.actionFromMain) {
 //         case "View all employees":
@@ -94,7 +95,7 @@ inquirer
 //             break;
 //     }
 // }
-);
+});
 // Default response for any request from browser (Not Found) since this app is from CLI
 app.use((req, res) => {
     res.status(404).end();
