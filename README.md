@@ -63,7 +63,7 @@ The following code shows
 
 This website is designed to allow a user to view the departments, roles and employees of a company. They can also add Departments, Roles and Employees and will be asked by Inquirer to provide the needed information to add them. They can also change the role of an existing employee. 
 
-![ alt text](./assets/employee-tracker-screenshot.png)
+<!-- ![ alt text](./assets/employee-tracker-screenshot.png) -->
 
 ---
 
