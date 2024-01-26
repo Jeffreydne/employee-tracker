@@ -1,9 +1,11 @@
 const express = require('express');
-// Import and require mysql2
-const mysql = require('mysql2');
+// Import and require inquirer
+const inquirer = require('inquirer');
 
-// XXXXXXXX LIKELY TO MOVE THIS XXXXXXX
+
+// XXXXXXXX LIKELY TO MOVE THESE XXXXXXX
 const {writeFile} = require('fs/promises');
+const mysql = require('mysql2');
 
 const PORT = process.env.PORT || 3002;
 const app = express();
@@ -18,7 +20,7 @@ inquirer
 .prompt([
     {
         type: 'list',
-        message: 'What would you like to do (Use arrow keys to scroll)? ',
+        message: 'What would you like to do ? ',
         choices: ['View all employees', 'Add employee', 'Update employee role', 'View all roles', 'Add a role', 'View all departments', 'Add department', 'Quit'],
         name:'actionFromMain',
     }
