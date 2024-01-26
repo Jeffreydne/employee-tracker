@@ -42,7 +42,7 @@ const handleMainPrompt = (response) => {
         case "View all departments":
             console.log(`Here are all Departments:\n `);
             db.query('SELECT * FROM departments', function (err, results) {
-                console.log(results);
+                console.log(`id   Department Name\n${results[0].id}   ${results[0].department_name}\n${results[1].id}   ${results[1].department_name}\n${results[2].id}   ${results[2].department_name}\n${results[3].id}   ${results[3].department_name}`);
               });
             break;
         case "Add department":
