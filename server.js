@@ -92,15 +92,38 @@ function mainPrompt () {
         if(response.actionFromMain === "Quit") {
             console.log(`To ${response.actionFromMain} the application, hit "control c".\n Thanks for using employee tracker!`);
         } else if (response.actionFromMain === "View all departments") {
-            console.log(`\nHere are all Departments:\n `);
+            console.log(`\nHere are all Departments:\n`);
             db.query('SELECT * FROM departments', function (err, results) {
-            console.log(`id   Department Name\n${results[0].id}   ${results[0].department_name}\n${results[1].id}   ${results[1].department_name}\n${results[2].id}   ${results[2].department_name}\n${results[3].id}   ${results[3].department_name}`);
+            console.log(`id   Department Name\n**************************\n${results[0].id}   ${results[0].department_name}\n${results[1].id}   ${results[1].department_name}\n${results[2].id}   ${results[2].department_name}\n${results[3].id}   ${results[3].department_name}\n**************************\n`);
             return mainPrompt();
         });
         } else if (response.actionFromMain === "View all roles") {
             console.log(`\nHere are all the Roles:\n `);
             db.query('SELECT * FROM roles JOIN departments ON roles.department_id = departments.id', function (err, results) {
-            console.log(`Role_id   Title          Salary   Department\n*********************************************\n${results[2].r_id}   ${results[2].title}       ${results[2].salary}   ${results[2].department_name}\n${results[3].r_id}   ${results[3].title}   ${results[3].salary}   ${results[3].department_name}\n${results[4].r_id}   ${results[4].title}    ${results[4].salary}   ${results[4].department_name}\n${results[5].r_id}   ${results[5].title}          ${results[5].salary}   ${results[5].department_name}\n${results[6].r_id}   ${results[6].title}     ${results[6].salary}   ${results[6].department_name}\n${results[7].r_id}   ${results[7].title}              ${results[7].salary}   ${results[7].department_name}\n${results[0].r_id}   ${results[0].title}          ${results[0].salary}   ${results[0].department_name}\n${results[1].r_id}   ${results[1].title}        ${results[1].salary}    ${results[1].department_name}`);
+            console.log(`Role_id   Title          Salary   Department\n*********************************************\n${results[2].r_id}   ${results[2].title}   ${results[2].salary}   ${results[2].department_name}\n${results[3].r_id}   ${results[3].title}   ${results[3].salary}   ${results[3].department_name}\n${results[4].r_id}   ${results[4].title}   ${results[4].salary}   ${results[4].department_name}\n${results[5].r_id}   ${results[5].title}    ${results[5].salary}   ${results[5].department_name}\n${results[6].r_id}   ${results[6].title}   ${results[6].salary}   ${results[6].department_name}\n${results[7].r_id}   ${results[7].title}    ${results[7].salary}   ${results[7].department_name}\n${results[0].r_id}   ${results[0].title}    ${results[0].salary}   ${results[0].department_name}\n${results[1].r_id}   ${results[1].title}    ${results[1].salary}   ${results[1].department_name}\n*********************************************\n`);
+            return mainPrompt();
+        });
+        } else if (response.actionFromMain === "View all employees") {
+
+            console.log(`\nHere are all Employees:\n `);
+            db.query('SELECT * FROM employees JOIN roles ON employees.role_id = roles.r_id JOIN departments ON roles.department_id = departments.id', function (err, results) {
+                console.log(`c_id 1st_Name   Last_Name     Title   Department  Salary      Manager\n***********************************************************************\n`);
+                for(let i = 0; i < results.length; i++) {
+                    let managerName;
+                    if(`${results[i].manager_id}` === 1 ) {
+                        managerName = 'Hodges';
+                    } else if(`${results[i].manager_id}` === 3 ) {
+                        managerName = "Nguyen";
+                    } else if(`${results[i].manager_id}` === 5 ) {
+                        managerName = "Jackson";
+                    } else if(`${results[i].manager_id}` === 7 ) {
+                        managerName = "Peters"
+                    } else {
+                        managerName = null;
+                    }
+                    console.log(`${results[i].c_id}   ${results[i].first_name}        ${results[i].last_name}     ${results[i].title}   ${results[i].department_name}  ${results[i].salary}  ${managerName}\n`);
+                }
+            console.log('***********************************************************************');
             return mainPrompt();
         });
         } else {
