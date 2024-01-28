@@ -97,18 +97,18 @@ function mainPrompt () {
                 for(let i = 0; i < results.length; i++) {
                     console.log(`${results[i].id}   ${results[i].department_name}\n`);
                 }
-            console.log(`**************************\n`);
-            return mainPrompt();
-        });
+                console.log(`**************************\n`);
+                return mainPrompt();
+            });
         } else if (response.actionFromMain === "View all roles") {
             console.log(`\nHere are all the Roles:\nRole_id   Title          Salary   Department\n*********************************************\n`);
             db.query('SELECT * FROM roles JOIN departments ON roles.department_id = departments.id', function (err, results) {
                 for(let i = 0; i < results.length; i++) {
                     console.log(`\n${results[i].r_id}   ${results[i].title}   ${results[i].salary}   ${results[i].department_name}`);
                 }
-            console.log(`\n*********************************************\n`);
-            return mainPrompt();
-        });
+                console.log(`\n*********************************************\n`);
+                return mainPrompt();
+            });
         } else if (response.actionFromMain === "View all employees") {
 
             console.log(`\nHere are all Employees:\n `);
@@ -129,19 +129,34 @@ function mainPrompt () {
                     }
                     console.log(`${results[i].c_id}   ${results[i].first_name}        ${results[i].last_name}     ${results[i].title}   ${results[i].department_name}  ${results[i].salary}  ${managerName}\n`);
                 }
-            console.log('***********************************************************************');
-            return mainPrompt();
-        });
+                console.log('***********************************************************************');
+                return mainPrompt();
+            });
         } else if (response.actionFromMain === "Add department") {
-            addDeptPrompt();
-        //     console.log(`\nHere are all Departments:\n`);
-        //     db.query('SELECT * FROM departments', function (err, results) {
-        //     console.log(`id   Department Name\n**************************\n${results[0].id}   ${results[0].department_name}\n${results[1].id}   ${results[1].department_name}\n${results[2].id}   ${results[2].department_name}\n${results[3].id}   ${results[3].department_name}\n**************************\n`);
-        //     return mainPrompt();
-        // });
+            inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    message: 'What is the name of the new Department?',
+                    name:'newDeptName',
+                },
+            ])
+            //switch statement to direct next action based on users choice
+            .then((response) => {
+                console.log(response);
+                db.query(`INSERT INTO departments (department_name) VALUES ("${response.newDeptName}")`, function (err, results) {
+                    // `${response.newDeptName} add to list of departments.\n`
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(`${response.newDeptName} added successfully to departments`);
+                    }
+                // console.log(results);
+                return mainPrompt();
+                })
+            }); 
         } else {
-            // handleMainPrompt(response);
-            return mainPrompt();
+            console.log('something must have gone wrong');
         }
     });
 }
