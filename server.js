@@ -155,6 +155,39 @@ function mainPrompt () {
                 return mainPrompt();
                 })
             }); 
+        } else if (response.actionFromMain === "Add a role") {
+            inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    message: 'What is the name of the new Role?',
+                    name:'newRoleName',
+                },
+                {
+                    type: 'input',
+                    message: 'What is the salary for the new Role?',
+                    name:'newRoleSalary',
+                },
+                {
+                    type: 'input',
+                    message: 'What is the department_id of the new Role?',
+                    name:'newDeptID',
+                }
+            ])
+            //switch statement to direct next action based on users choice
+            .then((response) => {
+                console.log(response);
+                db.query(`INSERT INTO roles (title, salary, department_id) VALUES ("${response.newRoleName}", "${response.newRoleSalary}", "${response.newDeptID}")`, function (err, results) {
+                    // `${response.newDeptName} add to list of departments.\n`
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(`${response.newRoleName} added successfully to roles`);
+                    }
+                // console.log(results);
+                return mainPrompt();
+                })
+            }); 
         } else {
             console.log('something must have gone wrong');
         }
