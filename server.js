@@ -95,7 +95,6 @@ function mainPrompt () {
                 },
             ])
             .then((response) => {
-                console.log(response);
                 db.query(`INSERT INTO departments (department_name) VALUES ("${response.newDeptName}")`, function (err, results) {
                     if (err) {
                         console.log(err);
@@ -126,7 +125,6 @@ function mainPrompt () {
                 }
             ])
             .then((response) => {
-                console.log(response);
                 db.query(`INSERT INTO roles (title, salary, department_id) VALUES ("${response.newRoleName}", "${response.newRoleSalary}", "${response.newDeptID}")`, function (err, results) {
                     if (err) {
                         console.log(err);
@@ -162,7 +160,6 @@ function mainPrompt () {
                 },                          
             ])
             .then((response) => {
-                console.log(response);
                 db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${response.newFirstName}", "${response.newLastName}", "${response.newRoleID}", "${response.newManagerID}")`, function (err, results) {
                     if (err) {
                         console.log(err);
@@ -193,7 +190,6 @@ function mainPrompt () {
                 } 
             ])
             .then((response) => {
-                console.log(response);
                 db.query(`UPDATE employees SET manager_id=${response.newManagerID}, role_id=${response.newRoleID} WHERE c_id=${response.empID}`, function (err, results) {
                     if (err) {
                         console.log(err);
@@ -210,7 +206,7 @@ function mainPrompt () {
     });
 }
 mainPrompt()
-.then(console.log('THIS WILL BE REMOVED'))
+.then(console.log('Press return or enter when the item highlighted is your choice'))
 .catch((error) => {});
 
 // Default response for any request from browser (Not Found) since this app is from CLI
