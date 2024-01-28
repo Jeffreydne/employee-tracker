@@ -210,7 +210,7 @@ function mainPrompt () {
                     type: 'input',
                     message: 'What is the id number of the manager for the new employee? (Enter the number 0 if there is no manager)',
                     name:'newManagerID',
-                }
+                },                          
             ])
             //switch statement to direct next action based on users choice
             .then((response) => {
@@ -221,6 +221,39 @@ function mainPrompt () {
                         console.log(err);
                     } else {
                         console.log(`${response.newFirstName} ${response.newLastName} added successfully to employees`);
+                    }
+                // console.log(results);
+                return mainPrompt();
+                })
+            }); 
+        } else if (response.actionFromMain === "Update employee role") {
+            inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    message: 'What is the id of the employee switching roles (the c_id on employee table)?',
+                    name:'empID',
+                },
+                {
+                    type: 'input',
+                    message: 'What is the new role id of the new role (r_id on roles table)?',
+                    name:'newRoleID',
+                },
+                {
+                    type: 'input',
+                    message: 'What is the new manager_id number of the new role(enter the number 0 if there is no manager)?',
+                    name:'newManagerID',
+                } 
+            ])
+            //switch statement to direct next action based on users choice
+            .then((response) => {
+                console.log(response);
+                db.query(`UPDATE employees SET manager_id=${response.newManagerID}, role_id=${response.newRoleID} WHERE c_id=${response.empID}`, function (err, results) {
+                    // `${response.newDeptName} add to list of departments.\n`
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(`The employee's role_id & manager_id were successfully changed`);
                     }
                 // console.log(results);
                 return mainPrompt();
