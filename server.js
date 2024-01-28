@@ -1,13 +1,6 @@
 const express = require('express');
-// Import and require inquirer
+// Import and require both inquirer and mysql2
 const inquirer = require('inquirer');
-
-// const { handleMainPrompt } = require('./actions/actions.js')
-// XXXXXXXX LIKELY TO DELETE THESE XXXXXXX
-// const {writeFile} = require('fs/promises');
-// const mysql = require('mysql2');
-// 
-const {writeFile} = require('fs/promises');
 const mysql = require('mysql2');
 
 const PORT = process.env.PORT || 3002;
@@ -31,52 +24,8 @@ const db = mysql.createConnection(
   );
   //Welcome message:
   console.log(`***** EMPLOYEE TRACKER *****\n`);
-// function to handle main prompt. To be called when ever user starts app or after choosing an option that does not require further prompts
-// const handleMainPrompt = (response) => {
-//     const db = mysql.createConnection(
-//         {
-//           host: 'localhost',
-//           user: 'root',
-//           password: 'password',
-//           database: 'employee_db'
-//         },
-//         console.log(`Connected to the employee_db database.`)
-//       );
-//     switch(response.actionFromMain) {
-//         case "View all employees":
-//             console.log(`Select your next option to ${response.actionFromMain}:\n `);
-  
-//             break;
-//         case "Add employee":
-//             console.log(`Select your next option to ${response.actionFromMain}:\n `);
-//             break;
-//         case "Update employee role":
-//            console.log(`Select your next option to ${response.actionFromMain}:\n `);
-//             break;
-//         case "View all roles":
-//             console.log(`Select your next option to ${response.actionFromMain}:\n `);
-//             break;
-//         case "Add a role":
-//             console.log(`Select your next option to ${response.actionFromMain}:\n `);
-//             break;
-//         case "View all departments":
-//             console.log(`Here are all Departments:\n `);
-//             db.query('SELECT * FROM departments', function (err, results) {
-//                 console.log(`id   Department Name\n${results[0].id}   ${results[0].department_name}\n${results[1].id}   ${results[1].department_name}\n${results[2].id}   ${results[2].department_name}\n${results[3].id}   ${results[3].department_name}`);
-//               });
-//               return mainPrompt();
-//             break;
-//         case "Add department":
-//             console.log(`Select your next option to ${response.actionFromMain}:\n `);
-//             break;
-//         case "Quit":
-//             console.log(`The application will ${response.actionFromMain} now. Restart with npm start on command line any time you want to return.\n `);
-//             break;
-//         default:
-//             console.log("You didn't pick an action.");
-//             break;
-//     }
-// }
+
+// function to handle main prompt. To be called when ever user starts app or after completing any option
 function mainPrompt () {
     return inquirer
     .prompt([
@@ -87,10 +36,12 @@ function mainPrompt () {
             name:'actionFromMain',
         }
     ])
-    //switch statement to direct next action based on users choice
+    //if/then statements to direct next action based on users choice
     .then((response) => {
+        // if user wishes to quit, directs them to use "control c"
         if(response.actionFromMain === "Quit") {
             console.log(`To ${response.actionFromMain} the application, hit "control c".\n Thanks for using employee tracker!`);
+            //View all Departments request uses a for loop to display results in a table of all departments using variables obtained from mysql2 for 'select * from departments' table command
         } else if (response.actionFromMain === "View all departments") {
             console.log(`\nHere are all Departments:\nid   Department Name\n**************************\n`);
             db.query('SELECT * FROM departments', function (err, results) {
@@ -100,6 +51,7 @@ function mainPrompt () {
                 console.log(`**************************\n`);
                 return mainPrompt();
             });
+            //View all roles request uses a for loop to display results in a table of all roles using variables obtained from mysql2 for 'select * from roles' table and 'JOIN departments' table commands
         } else if (response.actionFromMain === "View all roles") {
             console.log(`\nHere are all the Roles:\nRole_id   Title          Salary   Department\n*********************************************\n`);
             db.query('SELECT * FROM roles JOIN departments ON roles.department_id = departments.id', function (err, results) {
@@ -109,8 +61,8 @@ function mainPrompt () {
                 console.log(`\n*********************************************\n`);
                 return mainPrompt();
             });
+            //View all employees request uses a for loop to display results in a table of all employees using variables obtained from mysql2 for 'select * from employees' table and 'JOIN departments' table and 'JOIN roles' table commands
         } else if (response.actionFromMain === "View all employees") {
-
             console.log(`\nHere are all Employees:\n `);
             db.query('SELECT * FROM employees JOIN roles ON employees.role_id = roles.r_id JOIN departments ON roles.department_id = departments.id', function (err, results) {
                 console.log(`c_id 1st_Name   Last_Name     Title   Department  Salary      Manager\n***********************************************************************\n`);
@@ -132,6 +84,7 @@ function mainPrompt () {
                 console.log('***********************************************************************');
                 return mainPrompt();
             });
+             //Add department request uses inquirer to capture new department name in a variable then using mysql2 for 'INSERT INTO departments' adds the variable input by user into 'departments' table
         } else if (response.actionFromMain === "Add department") {
             inquirer
             .prompt([
@@ -141,20 +94,18 @@ function mainPrompt () {
                     name:'newDeptName',
                 },
             ])
-            //switch statement to direct next action based on users choice
             .then((response) => {
                 console.log(response);
                 db.query(`INSERT INTO departments (department_name) VALUES ("${response.newDeptName}")`, function (err, results) {
-                    // `${response.newDeptName} add to list of departments.\n`
                     if (err) {
                         console.log(err);
                     } else {
                         console.log(`${response.newDeptName} added successfully to departments`);
                     }
-                // console.log(results);
                 return mainPrompt();
                 })
             }); 
+            //Add a role request uses inquirer to capture new role name, salary, and department id in variables then using mysql2 for 'INSERT INTO roles' adds the variables input by user into 'roles' table
         } else if (response.actionFromMain === "Add a role") {
             inquirer
             .prompt([
@@ -174,20 +125,18 @@ function mainPrompt () {
                     name:'newDeptID',
                 }
             ])
-            //switch statement to direct next action based on users choice
             .then((response) => {
                 console.log(response);
                 db.query(`INSERT INTO roles (title, salary, department_id) VALUES ("${response.newRoleName}", "${response.newRoleSalary}", "${response.newDeptID}")`, function (err, results) {
-                    // `${response.newDeptName} add to list of departments.\n`
                     if (err) {
                         console.log(err);
                     } else {
                         console.log(`${response.newRoleName} added successfully to roles`);
                     }
-                // console.log(results);
                 return mainPrompt();
                 })
             }); 
+            //Add employee request uses inquirer to capture new employee's first & last names, and the ids of tehir new role and manager, into variables, then using mysql2 for 'INSERT INTO employees' adds the variables input by user into 'employees' table
         } else if (response.actionFromMain === "Add employee") {
             inquirer
             .prompt([
@@ -212,20 +161,18 @@ function mainPrompt () {
                     name:'newManagerID',
                 },                          
             ])
-            //switch statement to direct next action based on users choice
             .then((response) => {
                 console.log(response);
                 db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${response.newFirstName}", "${response.newLastName}", "${response.newRoleID}", "${response.newManagerID}")`, function (err, results) {
-                    // `${response.newDeptName} add to list of departments.\n`
                     if (err) {
                         console.log(err);
                     } else {
                         console.log(`${response.newFirstName} ${response.newLastName} added successfully to employees`);
                     }
-                // console.log(results);
                 return mainPrompt();
                 })
             }); 
+            //Update employee role request uses inquirer to capture which employee to change (by id), and their new role and manager (also by id), in variables, then using mysql2 for 'UPDATE employees' table adds the variables input by user with SET command into correct employee by usoing 'WHERE c_id=' command to reflect input of user
         } else if (response.actionFromMain === "Update employee role") {
             inquirer
             .prompt([
@@ -245,20 +192,18 @@ function mainPrompt () {
                     name:'newManagerID',
                 } 
             ])
-            //switch statement to direct next action based on users choice
             .then((response) => {
                 console.log(response);
                 db.query(`UPDATE employees SET manager_id=${response.newManagerID}, role_id=${response.newRoleID} WHERE c_id=${response.empID}`, function (err, results) {
-                    // `${response.newDeptName} add to list of departments.\n`
                     if (err) {
                         console.log(err);
                     } else {
                         console.log(`The employee's role_id & manager_id were successfully changed`);
                     }
-                // console.log(results);
                 return mainPrompt();
                 })
             }); 
+            // It should not be possible to get any other phrases input in teh 'response.actionFromMain' variable, but if there is something else something went wrong and that will be sent to user
         } else {
             console.log('something must have gone wrong');
         }
@@ -267,26 +212,13 @@ function mainPrompt () {
 mainPrompt()
 .then(console.log('THIS WILL BE REMOVED'))
 .catch((error) => {});
-// Initial console log and prompts on start
-// console.log(`***** EMPLOYEE TRACKER *****\n`);
-// inquirer
-// .prompt([
-//     {
-//         type: 'list',
-//         message: 'What would you like to do ? ',
-//         choices: ['View all employees', 'Add employee', 'Update employee role', 'View all roles', 'Add a role', 'View all departments', 'Add department', 'Quit'],
-//         name:'actionFromMain',
-//     }
-// ])
-// //switch statement to direct next action based on users choice
-// .then((response) => {
-//     handleMainPrompt(response)
-// });
+
 // Default response for any request from browser (Not Found) since this app is from CLI
 app.use((req, res) => {
     res.status(404).end();
   });
   
+  // port listener
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
