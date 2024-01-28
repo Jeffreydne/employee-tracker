@@ -117,13 +117,13 @@ function mainPrompt () {
                 for(let i = 0; i < results.length; i++) {
                     let managerName;
                     if(results[i].manager_id === 1 ) {
-                        managerName = 'Hodges';
+                        managerName = 'Cane';
                     } else if(results[i].manager_id === 3 ) {
                         managerName = "Nguyen";
                     } else if(results[i].manager_id === 5 ) {
-                        managerName = "Jackson";
+                        managerName = "Henson";
                     } else if(results[i].manager_id === 7 ) {
-                        managerName = "Peters"
+                        managerName = "Stevens";
                     } else {
                         managerName = null;
                     }
