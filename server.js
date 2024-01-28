@@ -101,9 +101,12 @@ function mainPrompt () {
             return mainPrompt();
         });
         } else if (response.actionFromMain === "View all roles") {
-            console.log(`\nHere are all the Roles:\n `);
+            console.log(`\nHere are all the Roles:\nRole_id   Title          Salary   Department\n*********************************************\n`);
             db.query('SELECT * FROM roles JOIN departments ON roles.department_id = departments.id', function (err, results) {
-            console.log(`Role_id   Title          Salary   Department\n*********************************************\n${results[2].r_id}   ${results[2].title}   ${results[2].salary}   ${results[2].department_name}\n${results[3].r_id}   ${results[3].title}   ${results[3].salary}   ${results[3].department_name}\n${results[4].r_id}   ${results[4].title}   ${results[4].salary}   ${results[4].department_name}\n${results[5].r_id}   ${results[5].title}    ${results[5].salary}   ${results[5].department_name}\n${results[6].r_id}   ${results[6].title}   ${results[6].salary}   ${results[6].department_name}\n${results[7].r_id}   ${results[7].title}    ${results[7].salary}   ${results[7].department_name}\n${results[0].r_id}   ${results[0].title}    ${results[0].salary}   ${results[0].department_name}\n${results[1].r_id}   ${results[1].title}    ${results[1].salary}   ${results[1].department_name}\n*********************************************\n`);
+                for(let i = 0; i < results.length; i++) {
+                    console.log(`\n${results[i].r_id}   ${results[i].title}   ${results[i].salary}   ${results[i].department_name}`);
+                }
+            console.log(`\n*********************************************\n`);
             return mainPrompt();
         });
         } else if (response.actionFromMain === "View all employees") {
