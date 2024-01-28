@@ -32,51 +32,51 @@ const db = mysql.createConnection(
   //Welcome message:
   console.log(`***** EMPLOYEE TRACKER *****\n`);
 // function to handle main prompt. To be called when ever user starts app or after choosing an option that does not require further prompts
-const handleMainPrompt = (response) => {
-    // const db = mysql.createConnection(
-    //     {
-    //       host: 'localhost',
-    //       user: 'root',
-    //       password: 'password',
-    //       database: 'employee_db'
-    //     },
-    //     console.log(`Connected to the employee_db database.`)
-    //   );
-    switch(response.actionFromMain) {
-        case "View all employees":
-            console.log(`Select your next option to ${response.actionFromMain}:\n `);
+// const handleMainPrompt = (response) => {
+//     const db = mysql.createConnection(
+//         {
+//           host: 'localhost',
+//           user: 'root',
+//           password: 'password',
+//           database: 'employee_db'
+//         },
+//         console.log(`Connected to the employee_db database.`)
+//       );
+//     switch(response.actionFromMain) {
+//         case "View all employees":
+//             console.log(`Select your next option to ${response.actionFromMain}:\n `);
   
-            break;
-        case "Add employee":
-            console.log(`Select your next option to ${response.actionFromMain}:\n `);
-            break;
-        case "Update employee role":
-           console.log(`Select your next option to ${response.actionFromMain}:\n `);
-            break;
-        case "View all roles":
-            console.log(`Select your next option to ${response.actionFromMain}:\n `);
-            break;
-        case "Add a role":
-            console.log(`Select your next option to ${response.actionFromMain}:\n `);
-            break;
-        case "View all departments":
-            console.log(`Here are all Departments:\n `);
-            db.query('SELECT * FROM departments', function (err, results) {
-                console.log(`id   Department Name\n${results[0].id}   ${results[0].department_name}\n${results[1].id}   ${results[1].department_name}\n${results[2].id}   ${results[2].department_name}\n${results[3].id}   ${results[3].department_name}`);
-              });
-              return mainPrompt();
-            break;
-        case "Add department":
-            console.log(`Select your next option to ${response.actionFromMain}:\n `);
-            break;
-        case "Quit":
-            console.log(`The application will ${response.actionFromMain} now. Restart with npm start on command line any time you want to return.\n `);
-            break;
-        default:
-            console.log("You didn't pick an action.");
-            break;
-    }
-}
+//             break;
+//         case "Add employee":
+//             console.log(`Select your next option to ${response.actionFromMain}:\n `);
+//             break;
+//         case "Update employee role":
+//            console.log(`Select your next option to ${response.actionFromMain}:\n `);
+//             break;
+//         case "View all roles":
+//             console.log(`Select your next option to ${response.actionFromMain}:\n `);
+//             break;
+//         case "Add a role":
+//             console.log(`Select your next option to ${response.actionFromMain}:\n `);
+//             break;
+//         case "View all departments":
+//             console.log(`Here are all Departments:\n `);
+//             db.query('SELECT * FROM departments', function (err, results) {
+//                 console.log(`id   Department Name\n${results[0].id}   ${results[0].department_name}\n${results[1].id}   ${results[1].department_name}\n${results[2].id}   ${results[2].department_name}\n${results[3].id}   ${results[3].department_name}`);
+//               });
+//               return mainPrompt();
+//             break;
+//         case "Add department":
+//             console.log(`Select your next option to ${response.actionFromMain}:\n `);
+//             break;
+//         case "Quit":
+//             console.log(`The application will ${response.actionFromMain} now. Restart with npm start on command line any time you want to return.\n `);
+//             break;
+//         default:
+//             console.log("You didn't pick an action.");
+//             break;
+//     }
+// }
 function mainPrompt () {
     return inquirer
     .prompt([
@@ -87,7 +87,7 @@ function mainPrompt () {
             name:'actionFromMain',
         }
     ])
-//switch statement to direct next action based on users choice
+    //switch statement to direct next action based on users choice
     .then((response) => {
         if(response.actionFromMain === "Quit") {
             console.log(`To ${response.actionFromMain} the application, hit "control c".\n Thanks for using employee tracker!`);
@@ -110,13 +110,13 @@ function mainPrompt () {
                 console.log(`c_id 1st_Name   Last_Name     Title   Department  Salary      Manager\n***********************************************************************\n`);
                 for(let i = 0; i < results.length; i++) {
                     let managerName;
-                    if(`${results[i].manager_id}` === 1 ) {
+                    if(results[i].manager_id === 1 ) {
                         managerName = 'Hodges';
-                    } else if(`${results[i].manager_id}` === 3 ) {
+                    } else if(results[i].manager_id === 3 ) {
                         managerName = "Nguyen";
-                    } else if(`${results[i].manager_id}` === 5 ) {
+                    } else if(results[i].manager_id === 5 ) {
                         managerName = "Jackson";
-                    } else if(`${results[i].manager_id}` === 7 ) {
+                    } else if(results[i].manager_id === 7 ) {
                         managerName = "Peters"
                     } else {
                         managerName = null;
@@ -126,8 +126,15 @@ function mainPrompt () {
             console.log('***********************************************************************');
             return mainPrompt();
         });
+        } else if (response.actionFromMain === "Add department") {
+            addDeptPrompt();
+        //     console.log(`\nHere are all Departments:\n`);
+        //     db.query('SELECT * FROM departments', function (err, results) {
+        //     console.log(`id   Department Name\n**************************\n${results[0].id}   ${results[0].department_name}\n${results[1].id}   ${results[1].department_name}\n${results[2].id}   ${results[2].department_name}\n${results[3].id}   ${results[3].department_name}\n**************************\n`);
+        //     return mainPrompt();
+        // });
         } else {
-            handleMainPrompt(response);
+            // handleMainPrompt(response);
             return mainPrompt();
         }
     });
