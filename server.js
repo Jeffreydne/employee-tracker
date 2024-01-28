@@ -188,6 +188,44 @@ function mainPrompt () {
                 return mainPrompt();
                 })
             }); 
+        } else if (response.actionFromMain === "Add employee") {
+            inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    message: 'What is the first name of the new employee?',
+                    name:'newFirstName',
+                },
+                {
+                    type: 'input',
+                    message: 'What is the last name of the new employee?',
+                    name:'newLastName',
+                },
+                {
+                    type: 'input',
+                    message: 'What is the id number of the role for the new employee?',
+                    name:'newRoleID',
+                },
+                {
+                    type: 'input',
+                    message: 'What is the id number of the manager for the new employee? (Enter the number 0 if there is no manager)',
+                    name:'newManagerID',
+                }
+            ])
+            //switch statement to direct next action based on users choice
+            .then((response) => {
+                console.log(response);
+                db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ("${response.newFirstName}", "${response.newLastName}", "${response.newRoleID}", "${response.newManagerID}")`, function (err, results) {
+                    // `${response.newDeptName} add to list of departments.\n`
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log(`${response.newFirstName} ${response.newLastName} added successfully to employees`);
+                    }
+                // console.log(results);
+                return mainPrompt();
+                })
+            }); 
         } else {
             console.log('something must have gone wrong');
         }
