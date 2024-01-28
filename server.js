@@ -92,9 +92,12 @@ function mainPrompt () {
         if(response.actionFromMain === "Quit") {
             console.log(`To ${response.actionFromMain} the application, hit "control c".\n Thanks for using employee tracker!`);
         } else if (response.actionFromMain === "View all departments") {
-            console.log(`\nHere are all Departments:\n`);
+            console.log(`\nHere are all Departments:\nid   Department Name\n**************************\n`);
             db.query('SELECT * FROM departments', function (err, results) {
-            console.log(`id   Department Name\n**************************\n${results[0].id}   ${results[0].department_name}\n${results[1].id}   ${results[1].department_name}\n${results[2].id}   ${results[2].department_name}\n${results[3].id}   ${results[3].department_name}\n**************************\n`);
+                for(let i = 0; i < results.length; i++) {
+                    console.log(`${results[i].id}   ${results[i].department_name}\n`);
+                }
+            console.log(`**************************\n`);
             return mainPrompt();
         });
         } else if (response.actionFromMain === "View all roles") {
