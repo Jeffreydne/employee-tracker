@@ -13,6 +13,7 @@ An app that allows the user to see and update employee and employment data from 
 | Git | [https://git-scm.com/](https://git-scm.com/)     |    
 | Node.js | [https://nodejs.org/](https://nodejs.org/)     |
 | NPM | [https://www.npmjs.com](https://www.npmjs.com)   |
+| Mysql | [https://www.mysql.com/](https://www.mysql.com/)   |
 
 ---
 
@@ -30,14 +31,15 @@ An app that allows the user to see and update employee and employment data from 
 ## Description
 
 [Visit the Github repository](https://github.com/Jeffreydne/employee-tracker)
+[Watch the screencastify video explaining how to use the app]()
 
-This application alows a user to interact with the Employee Database which is stroed locally. They will be able to see and update 3 tables: Departments, Roles and Employees. 
+This application allows a user to interact with the Employee Database which is stored locally. The user will be able to see and update 3 tables: Departments, Roles and Employees. 
 
 ---
 
 ## Instalation
 
-This application requires the npm modules inquirer and mysql2. If you do not already have this module installed globally then you will need to type npm install in the command line before running this program. 
+This application requires the npm modules express, inquirer and mysql2. You will need to type npm install in the command line before running this program for the 1st time. 
 
 
 ---
