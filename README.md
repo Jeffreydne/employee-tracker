@@ -21,17 +21,15 @@ An app that allows the user to see and update employee and employment data from 
 ![Static Badge](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![Static Badge](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
-<!-- ![Static Badge](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white) -->
 ![Static Badge](https://img.shields.io/badge/License-MIT_License-blue)
-<!-- ![Static Badge](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge) -->
-
 ![Static Badge](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
 ---
 
 ## Description
 
 [Visit the Github repository](https://github.com/Jeffreydne/employee-tracker)
-[Watch the screencastify video explaining how to use the app]()
+
+[Watch the screencastify video explaining how to use the app](https://watch.screencastify.com/v/GwRm5OkBUB7XagYLUSTb)
 
 This application allows a user to interact with the Employee Database which is stored locally. The user will be able to see and update 3 tables: Departments, Roles and Employees. 
 

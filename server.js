@@ -75,7 +75,7 @@ function mainPrompt () {
                     } else if(results[i].manager_id === 5 ) {
                         managerName = "Henson";
                     } else if(results[i].manager_id === 7 ) {
-                        managerName = "Stevens";
+                        managerName = "Jones";
                     } else {
                         managerName = null;
                     }
